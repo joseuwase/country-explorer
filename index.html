@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Country Explorer</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <header>
+
+    <h1>Country Explorer</h1>
+
+    <!-- SEARCH -->
+    <input
+      id="search"
+      type="text"
+      placeholder="Search country..."
+      aria-label="Search country"
+    />
+
+    <!-- FILTER -->
+    <select id="regionFilter" aria-label="Filter by region">
+      <option value="">All Regions</option>
+      <option>Africa</option>
+      <option>Europe</option>
+      <option>Asia</option>
+      <option>Americas</option>
+      <option>Oceania</option>
+    </select>
+
+    <!-- SORT -->
+    <button id="sortBtn">
+      Sort Population
+    </button>
+
+  </header>
+
+  <!-- STATS (reduce requirement target) -->
+  <section id="stats">
+    <p id="totalCountries"></p>
+    <p id="totalPopulation"></p>
+  </section>
+
+  <!-- STATES -->
+  <div id="loading"></div>
+  <div id="error"></div>
+
+  <!-- LIST VIEW -->
+  <main id="countries"></main>
+
+  <!-- DETAIL VIEW -->
+  <section id="countryDetail"></section>
+
+  <!-- SCRIPT -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

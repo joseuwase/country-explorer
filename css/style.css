@@ -1,0 +1,96 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f6f7fb;
+  color: #222;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+/* INPUTS */
+input, select, button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+/* ACCESSIBILITY FOCUS (IMPORTANT) */
+input:focus,
+select:focus,
+button:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74,144,226,0.3);
+}
+
+/* BUTTON */
+button {
+  cursor: pointer;
+  background: #4a90e2;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background: #357ab8;
+}
+
+/* GRID */
+#countries {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border: 1px solid #e5e5e5;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* HOVER EFFECT (IMPORTANT FOR POLISH) */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* LOADING + ERROR */
+#loading {
+  color: #555;
+  margin: 10px 0;
+}
+
+#error {
+  color: red;
+  margin: 10px 0;
+}
+
+/* DETAIL VIEW */
+#countryDetail {
+  margin-top: 20px;
+}
+
+.detail-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
