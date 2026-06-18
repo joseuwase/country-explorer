@@ -1,109 +1,100 @@
-/* ---------------- RENDER COUNTRIES ---------------- */
-export function renderCountries(container, countries) {
-  container.innerHTML = "";
+export function renderCountries(countries, onSelect = () => {}) {
 
-  countries.forEach(country => {
-    const card = document.createElement("article");
-    card.classList.add("card");
+  const container = document.getElementById("countries");
 
-    card.dataset.code = country.cca3;
+  container.innerHTML = countries
+    .map(country => `
+      <div class="card" data-name="${country.name}">
 
-    card.innerHTML = `
-      <img src="${country.flag}" alt="Flag of ${country.name}" />
-
-      <div class="card-content">
-        <h3>${country.name}</h3>
-
-        <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
-
-        <p><strong>Region:</strong> ${country.region}</p>
-
-        <p><strong>Capital:</strong> ${country.capital}</p>
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
-}
-
-/* ---------------- RENDER DETAIL VIEW ---------------- */
-export function renderCountryDetail(container, country) {
-  container.innerHTML = `
-    <div class="detail-layout">
-
-      <div>
         <img
           src="${country.flag}"
           alt="Flag of ${country.name}"
         />
-      </div>
 
-      <div class="detail-info">
-        <h2>${country.name}</h2>
+        <h3>${country.name}</h3>
 
-        <p>
-          <strong>Official Name:</strong>
-          ${country.officialName}
-        </p>
-
-        <p>
-          <strong>Capital:</strong>
-          ${country.capital}
-        </p>
+        <p><strong>Region:</strong> ${country.region}</p>
 
         <p>
           <strong>Population:</strong>
-          ${country.population.toLocaleString()}
+          ${(country.population || 0).toLocaleString()}
         </p>
 
-        <p>
-          <strong>Region:</strong>
-          ${country.region}
-        </p>
+      </div>
+    `)
+    .join("");
 
-        <p>
-          <strong>Subregion:</strong>
-          ${country.subregion}
-        </p>
+  // attach click events safely (IMPORTANT FIX)
+  container.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("click", () => {
+      const name = card.dataset.name;
+      const selected = countries.find(c => c.name === name);
+      if (selected) onSelect(selected);
+    });
+  });
+}
 
-        <p>
-          <strong>Languages:</strong>
-          ${country.languages}
-        </p>
+/* ---------------- LOADING STATE ---------------- */
+export function renderLoading() {
 
-        <p>
-          <strong>Currencies:</strong>
-          ${country.currencies}
-        </p>
+  document.getElementById("loading").textContent = "Loading countries...";
+  document.getElementById("error").textContent = "";
+  document.getElementById("countries").innerHTML = "";
+}
+
+/* ---------------- ERROR STATE ---------------- */
+export function renderError(message) {
+
+  document.getElementById("loading").textContent = "";
+  document.getElementById("error").textContent = message;
+  document.getElementById("countries").innerHTML = "";
+}
+
+/* ---------------- EMPTY STATE ---------------- */
+export function renderEmpty(message) {
+
+  document.getElementById("loading").textContent = "";
+  document.getElementById("error").textContent = "";
+  document.getElementById("countries").innerHTML = `<h2>${message}</h2>`;
+}
+
+/* ---------------- DETAIL VIEW ---------------- */
+export function renderCountryDetail(country, borders = []) {
+
+  const container = document.getElementById("countryDetail");
+
+  container.innerHTML = `
+    <div class="detail-card">
+
+      <button id="closeDetail">Close</button>
+
+      <img src="${country.flag}" alt="Flag of ${country.name}" />
+
+      <h2>${country.name}</h2>
+
+      <p><strong>Capital:</strong> ${country.capital}</p>
+      <p><strong>Region:</strong> ${country.region}</p>
+
+      <p>
+        <strong>Population:</strong>
+        ${(country.population || 0).toLocaleString()}
+      </p>
+
+      <p>
+        <strong>Area:</strong>
+        ${country.area?.toLocaleString() || "N/A"}
+      </p>
+
+      <h3>Border Countries</h3>
+
+      <div class="borders">
+        ${
+          borders.length
+            ? borders.map(b => `<span>${b.name || "Unknown"}</span>`).join("")
+            : "<p>No border countries</p>"
+        }
       </div>
 
     </div>
   `;
-}
-
-/* ---------------- LOADING STATE ---------------- */
-export function showLoading(element) {
-  element.classList.remove("hidden");
-}
-
-/* ---------------- HIDE STATE ---------------- */
-export function hideElement(element) {
-  element.classList.add("hidden");
-}
-
-/* ---------------- ERROR STATE ---------------- */
-export function showError(errorElement) {
-  errorElement.classList.remove("hidden");
-}
-
-/* ---------------- EMPTY STATE ---------------- */
-export function showEmpty(emptyElement) {
-  emptyElement.classList.remove("hidden");
-}
-
-/* ---------------- HIDE ALL STATES ---------------- */
-export function hideStates(...elements) {
-  elements.forEach(element => {
-    element.classList.add("hidden");
-  });
 }
