@@ -1,44 +1,30 @@
 const BASE_URL = "https://restcountries.com/v3.1";
 
+/* ---------------- CORE REQUEST HANDLER ---------------- */
+async function request(endpoint) {
+  const response = await fetch(`${BASE_URL}${endpoint}`);
+
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
 /* ---------------- GET ALL COUNTRIES ---------------- */
-export async function getCountries() {
-
-  const response = await fetch(`${BASE_URL}/all`);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch countries");
-  }
-
-  return await response.json();
+export function getCountries() {
+  return request("/all");
 }
 
-/* ---------------- GET COUNTRY BY NAME (OPTIONAL FEATURE) ---------------- */
-export async function getCountryByName(name) {
-
-  const response = await fetch(
-    `${BASE_URL}/name/${name}?fullText=true`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch country details");
-  }
-
-  return await response.json();
+/* ---------------- GET COUNTRY BY NAME ---------------- */
+export function getCountryByName(name) {
+  return request(`/name/${encodeURIComponent(name)}?fullText=true`);
 }
 
-/* ---------------- GET COUNTRY BY CODE (SAFE + NORMALIZED) ---------------- */
+/* ---------------- GET COUNTRY BY CODE ---------------- */
 export async function getCountryByCode(code) {
+  const data = await request(`/alpha/${code}`);
 
-  const response = await fetch(
-    `${BASE_URL}/alpha/${code}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch border country");
-  }
-
-  const data = await response.json();
-
-  // ✅ normalize API response (prevents main.js hacks)
+  // API sometimes returns array or object depending on endpoint behavior
   return Array.isArray(data) ? data[0] : data;
 }
