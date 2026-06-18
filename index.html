@@ -5,58 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Country Explorer</title>
 
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
-
 <body>
 
-  <header>
-
-    <h1>Country Explorer</h1>
-
-    <!-- SEARCH -->
-    <input
-      id="search"
-      type="text"
-      placeholder="Search country..."
-      aria-label="Search country"
-    />
-
-    <!-- FILTER -->
-    <select id="regionFilter" aria-label="Filter by region">
-      <option value="">All Regions</option>
-      <option>Africa</option>
-      <option>Europe</option>
-      <option>Asia</option>
-      <option>Americas</option>
-      <option>Oceania</option>
-    </select>
-
-    <!-- SORT -->
-    <button id="sortBtn">
-      Sort Population
-    </button>
-
+  <header class="header">
+    <h1>🌍 Country Explorer</h1>
+    <p>Explore countries around the world</p>
   </header>
 
-  <!-- STATS (reduce requirement target) -->
-  <section id="stats">
-    <p id="totalCountries"></p>
-    <p id="totalPopulation"></p>
-  </section>
+  <main>
 
-  <!-- STATES -->
-  <div id="loading"></div>
-  <div id="error"></div>
+    <!-- Controls -->
+    <section class="controls">
 
-  <!-- LIST VIEW -->
-  <main id="countries"></main>
+      <input
+        type="text"
+        id="search"
+        placeholder="Search for a country..."
+        aria-label="Search countries"
+      />
 
-  <!-- DETAIL VIEW -->
-  <section id="countryDetail"></section>
+      <select id="regionFilter" aria-label="Filter by region">
+        <option value="">All Regions</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
 
-  <!-- SCRIPT -->
-  <script type="module" src="js/main.js"></script>
+    </section>
+
+    <!-- Loading State -->
+    <section id="loading" class="message hidden">
+      <p>Loading countries...</p>
+    </section>
+
+    <!-- Error State -->
+    <section id="error" class="message hidden">
+      <p>Failed to load countries.</p>
+      <button id="retryBtn">Retry</button>
+    </section>
+
+    <!-- Empty State -->
+    <section id="empty" class="message hidden">
+      <p>No countries found.</p>
+    </section>
+
+    <!-- Countries Grid -->
+    <section
+      id="countriesContainer"
+      class="countries-grid"
+      aria-live="polite"
+    >
+    </section>
+
+    <!-- Detail View -->
+    <section id="countryDetail" class="country-detail hidden">
+
+      <button id="backBtn">
+        ← Back
+      </button>
+
+      <div id="detailContent"></div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Country Explorer | JavaScript Capstone Project</p>
+  </footer>
+
+  <script type="module" src="./js/main.js"></script>
 
 </body>
 </html>
